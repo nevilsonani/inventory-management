@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "ghost" | "danger" | "brand";
+type Variant = "primary" | "secondary" | "ghost" | "danger";
 type Size = "sm" | "md" | "icon";
 
 const base =
@@ -11,7 +11,6 @@ const base =
 const variants: Record<Variant, string> = {
   primary:
     "bg-zinc-900 text-white shadow-sm shadow-zinc-950/10 hover:bg-zinc-800 [&_svg]:text-zinc-300",
-  brand: "bg-brand-600 text-white shadow-sm shadow-brand-900/20 hover:bg-brand-700",
   secondary:
     "bg-white text-zinc-800 shadow-card ring-1 ring-zinc-950/10 hover:bg-zinc-50 [&_svg]:text-zinc-500",
   ghost: "text-zinc-600 hover:bg-zinc-950/5 hover:text-zinc-900 [&_svg]:text-zinc-500",

@@ -18,7 +18,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5 rounded-lg">
       <span className="grid size-8 place-items-center rounded-lg bg-gradient-to-br from-brand-500 to-brand-800 shadow-sm ring-1 shadow-brand-900/20 ring-black/10">
-        <svg viewBox="0 0 24 24" className="size-4.5 text-white" fill="none" aria-hidden>
+        <svg viewBox="0 0 24 24" className="size-4.5 text-on-brand" fill="none" aria-hidden>
           <path d="M12 3 4 7.5v9L12 21l8-4.5v-9L12 3Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
           <path d="M4 7.5 12 12l8-4.5M12 12v9" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
         </svg>

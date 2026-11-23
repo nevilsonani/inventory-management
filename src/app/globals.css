@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* `dark:` utilities follow the theme toggle (see src/lib/theme.ts), not only the OS. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @theme inline {
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
@@ -17,6 +20,9 @@
   --color-brand-700: #1c5cab;
   --color-brand-800: #184f95;
   --color-brand-900: #0d366b;
+
+  /* Text on a brand-coloured fill. Stays white in both themes. */
+  --color-on-brand: #ffffff;
 
   /* Chart series (validated pair: CVD ΔE 24.7, contrast ≥ 3:1 on white). */
   --color-series-1: #2a78d6;
@@ -40,7 +46,72 @@
   }
 }
 
+/*
+ * Dark theme. Rather than adding `dark:` variants to every component, the
+ * colour scales flip (the approach Radix Colors uses). Classes keep their
+ * meaning in both themes: `bg-white` is a surface, `bg-zinc-50` the canvas,
+ * `text-zinc-900` primary text, `ring-zinc-950/10` a hairline. Status tints
+ * (`*-50`, `*-100`) become translucent washes and text steps get lighter.
+ */
 @layer base {
+  [data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-white: #16161a;
+    --color-zinc-50: #0c0c0e;
+    --color-zinc-100: #232328;
+    --color-zinc-200: #2e2e34;
+    --color-zinc-300: #45454d;
+    --color-zinc-400: #71717a;
+    --color-zinc-500: #a1a1aa;
+    --color-zinc-600: #b9b9c1;
+    --color-zinc-700: #d4d4d8;
+    --color-zinc-800: #e4e4e7;
+    --color-zinc-900: #f4f4f5;
+    --color-zinc-950: #fafafa;
+
+    --color-brand-50: color-mix(in oklab, #2a78d6 16%, transparent);
+    --color-brand-100: color-mix(in oklab, #2a78d6 26%, transparent);
+    --color-brand-600: #3987e5;
+    --color-brand-700: #86b6ef;
+    --color-brand-900: #dcebfc;
+
+    --color-emerald-50: color-mix(in oklab, #10b981 14%, transparent);
+    --color-emerald-100: color-mix(in oklab, #10b981 24%, transparent);
+    --color-emerald-600: #34d399;
+    --color-emerald-700: #34d399;
+    --color-emerald-800: #6ee7b7;
+
+    --color-amber-50: color-mix(in oklab, #f59e0b 14%, transparent);
+    --color-amber-100: color-mix(in oklab, #f59e0b 24%, transparent);
+    --color-amber-600: #fbbf24;
+    --color-amber-700: #fbbf24;
+    --color-amber-800: #fcd34d;
+
+    --color-rose-50: color-mix(in oklab, #f43f5e 14%, transparent);
+    --color-rose-100: color-mix(in oklab, #f43f5e 24%, transparent);
+    --color-rose-600: #fb7185;
+    --color-rose-700: #fda4af;
+
+    --color-violet-50: color-mix(in oklab, #8b5cf6 16%, transparent);
+    --color-violet-100: color-mix(in oklab, #8b5cf6 26%, transparent);
+    --color-violet-600: #a78bfa;
+    --color-violet-700: #c4b5fd;
+
+    /* Dark steps of the same two hues (validated on #16161a: CVD ΔE 26.8). */
+    --color-series-1: #3987e5;
+    --color-series-2: #d95926;
+
+    --shadow-card: 0 1px 2px 0 rgb(0 0 0 / 0.3);
+    --shadow-overlay: 0 24px 48px -12px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.08);
+  }
+
+  /* Applied for one frame while switching themes so colours change together. */
+  .theme-switching,
+  .theme-switching * {
+    transition: none !important;
+  }
+
   html {
     color-scheme: light;
     -webkit-tap-highlight-color: transparent;
@@ -101,6 +172,11 @@
     background: rgb(9 9 11 / 0.4);
     backdrop-filter: blur(2px);
     transition: background-color 200ms ease-out;
+  }
+
+  [data-theme="dark"] .dialog-modal::backdrop,
+  [data-theme="dark"] .dialog-sheet::backdrop {
+    background: rgb(0 0 0 / 0.6);
   }
 
   @starting-style {

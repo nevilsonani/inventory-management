@@ -11,7 +11,7 @@ import {
   SlidersHorizontal,
   Truck,
 } from "lucide-react";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useState, type CSSProperties, type ReactNode } from "react";
 import { Toaster } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useModal } from "@/components/ui/dialog";
@@ -21,6 +21,14 @@ import { ClientOnly } from "./client-only";
 import { CommandMenu } from "./command-menu";
 import { DialogProvider, useOpenDialog } from "./dialog-provider";
 import { Logo, Sidebar } from "./sidebar";
+import { ThemeToggle } from "./theme-toggle";
+
+// Toasts use the same colour tokens as the app, so they follow the theme.
+const toastTheme = {
+  "--normal-bg": "var(--color-white)",
+  "--normal-text": "var(--color-zinc-900)",
+  "--normal-border": "var(--color-zinc-200)",
+} as CSSProperties;
 
 export function AppShell({ children }: { children: ReactNode }) {
   const [navOpen, setNavOpen] = useState(false);
@@ -46,7 +54,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       <div className="lg:pl-60">
         <TopBar onOpenNav={() => setNavOpen(true)} onOpenCommand={() => setCommandOpen(true)} />
         <main className="mx-auto w-full max-w-[1360px] px-4 pt-6 pb-16 sm:px-6 lg:px-10 lg:pt-8">
-          <ClientOnly fallback={<PageSkeleton />}>{children}</ClientOnly>
+          {children}
         </main>
       </div>
 
@@ -58,7 +66,11 @@ export function AppShell({ children }: { children: ReactNode }) {
       )}
       <Toaster
         position="bottom-right"
-        toastOptions={{ className: "!font-sans !rounded-xl !shadow-overlay !border-0" }}
+        style={toastTheme}
+        toastOptions={{
+          className: "!font-sans !rounded-xl !shadow-overlay !border-0",
+          classNames: { description: "!text-zinc-500" },
+        }}
       />
     </DialogProvider>
   );
@@ -94,10 +106,7 @@ function TopBar({ onOpenNav, onOpenCommand }: { onOpenNav: () => void; onOpenCom
         </button>
 
         <div className="flex items-center gap-2 lg:ml-auto">
-          <span className="hidden items-center gap-1.5 rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-600/15 ring-inset xl:inline-flex">
-            <span className="size-1.5 rounded-full bg-emerald-500" aria-hidden />
-            Demo data · saved in this browser
-          </span>
+          <ThemeToggle />
           <Menu
             trigger={({ open, toggle }) => (
               <Button variant="primary" onClick={toggle} aria-expanded={open} aria-haspopup="menu">
@@ -130,22 +139,5 @@ function MobileNav({ onClose }: { onClose: () => void }) {
     >
       <Sidebar onNavigate={onClose} />
     </dialog>
-  );
-}
-
-function PageSkeleton() {
-  return (
-    <div className="animate-pulse" aria-busy="true" aria-label="Loading">
-      <div className="mb-6 space-y-2">
-        <div className="h-7 w-48 rounded-lg bg-zinc-200/70" />
-        <div className="h-4 w-80 max-w-full rounded bg-zinc-200/50" />
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {Array.from({ length: 4 }, (_, i) => (
-          <div key={i} className="h-28 rounded-xl bg-white ring-1 ring-zinc-950/[0.05]" />
-        ))}
-      </div>
-      <div className="mt-4 h-80 rounded-xl bg-white ring-1 ring-zinc-950/[0.05]" />
-    </div>
   );
 }

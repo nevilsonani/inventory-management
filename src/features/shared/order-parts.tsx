@@ -30,7 +30,7 @@ export function Steps({ steps }: { steps: Step[] }) {
           <span
             className={cn(
               "relative grid size-6 place-items-center rounded-full ring-4 ring-white",
-              step.state === "done" && "bg-brand-600 text-white",
+              step.state === "done" && "bg-brand-600 text-on-brand",
               step.state === "current" && "bg-white text-brand-600 ring-brand-100 [box-shadow:inset_0_0_0_1.5px_var(--color-brand-500)]",
               step.state === "upcoming" && "bg-zinc-100 text-zinc-400",
               step.state === "cancelled" && "bg-zinc-200 text-zinc-500",

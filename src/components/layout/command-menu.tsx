@@ -9,6 +9,7 @@ import {
   ReceiptText,
   Search,
   SlidersHorizontal,
+  SunMoon,
   Truck,
   type LucideIcon,
 } from "lucide-react";
@@ -18,6 +19,7 @@ import { useModal } from "@/components/ui/dialog";
 import { Kbd } from "@/components/ui/kbd";
 import { formatCurrency } from "@/lib/format";
 import { byId, onHand, orderTotal } from "@/lib/selectors";
+import { toggleTheme } from "@/lib/theme";
 import { useInventory } from "@/lib/store";
 import type { InventoryState } from "@/lib/types";
 import { cn, matches } from "@/lib/utils";
@@ -53,6 +55,7 @@ function buildGroups(
     { id: "adjust", label: "Adjust stock (physical count)", icon: SlidersHorizontal, run: () => open({ type: "adjust" }) },
     { id: "new-customer", label: "Add customer", icon: Plus, run: () => open({ type: "customer" }) },
     { id: "new-supplier", label: "Add supplier", icon: Plus, run: () => open({ type: "supplier" }) },
+    { id: "theme", label: "Toggle dark mode", icon: SunMoon, run: toggleTheme },
   ];
   const pages: Entry[] = allNavItems.map((item) => ({
     id: `nav-${item.href}`,
