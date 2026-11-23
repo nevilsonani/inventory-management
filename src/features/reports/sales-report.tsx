@@ -5,7 +5,7 @@ import { Card, CardHeader } from "@/components/ui/card";
 import { Delta, Stat } from "@/components/ui/stat";
 import { Table, TBody, TD, TH, THead, TR } from "@/components/ui/table";
 import { downloadCsv } from "@/lib/csv";
-import { formatCompactCurrency, formatCurrency, formatDate } from "@/lib/format";
+import { formatCompactCurrency, formatCurrency, formatDate, formatNumber } from "@/lib/format";
 import {
   byId,
   groupTotals,
@@ -67,7 +67,7 @@ export function SalesReport({ state, from, to }: { state: InventoryState; from: 
           value={formatCompactCurrency(revenue)}
           footer={<Delta current={revenue} previous={previous} suffix={`vs previous ${span} days`} />}
         />
-        <Stat label="Invoices" value={invoices.length} footer={`${sum(invoices, (so) => unitCount(so.lines))} units sold`} />
+        <Stat label="Invoices" value={invoices.length} footer={`${formatNumber(sum(invoices, (so) => unitCount(so.lines)))} units sold`} />
         <Stat label="Average invoice" value={formatCompactCurrency(invoices.length ? revenue / invoices.length : 0)} footer="Including GST" />
         <Stat label="GST collected" value={formatCompactCurrency(gst)} footer="Output tax at 18%" />
       </div>

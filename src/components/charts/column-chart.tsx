@@ -41,7 +41,7 @@ export function ColumnChart({ data, series, formatValue, formatAxis, height = 24
   const top = ticks[ticks.length - 1];
 
   return (
-    <div>
+    <div className="relative">
       <div className="flex" style={{ height }}>
         {/* Y axis */}
         <div className="relative w-14 shrink-0" aria-hidden>

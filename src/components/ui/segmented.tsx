@@ -29,7 +29,7 @@ export function Segmented<T extends string>({
       role="radiogroup"
       aria-label={label}
       className={cn(
-        "inline-flex max-w-full gap-0.5 overflow-x-auto rounded-lg bg-zinc-950/[0.04] p-0.5 ring-1 ring-zinc-950/[0.04] ring-inset",
+        "inline-flex max-w-full gap-0.5 overflow-x-auto rounded-lg [scrollbar-width:none] bg-zinc-950/[0.04] p-0.5 ring-1 ring-zinc-950/[0.04] ring-inset",
         className,
       )}
     >

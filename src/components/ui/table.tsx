@@ -1,10 +1,14 @@
 import type { ComponentProps } from "react";
 import { cn } from "@/lib/utils";
 
-/** Horizontal scroll on small screens, full width otherwise. */
+/**
+ * Horizontal scroll on small screens, full width otherwise. `relative` makes
+ * the scroller contain absolutely positioned children (e.g. sr-only labels),
+ * which would otherwise widen the page.
+ */
 export function Table({ className, ...props }: ComponentProps<"table">) {
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table className={cn("w-full border-collapse text-sm", className)} {...props} />
     </div>
   );

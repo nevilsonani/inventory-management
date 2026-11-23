@@ -86,7 +86,7 @@ export function SalesOrderDialog({ prefill, onClose }: { prefill?: SalePrefill; 
                 : undefined
             }
           >
-            <Select value={customerId} onChange={(event) => setCustomerId(event.target.value)} autoFocus>
+            <Select value={customerId} onChange={(event) => setCustomerId(event.target.value)} data-autofocus>
               <option value="">Select a customer…</option>
               {state.customers.map((c) => (
                 <option key={c.id} value={c.id}>

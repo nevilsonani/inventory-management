@@ -18,6 +18,9 @@ export function useModal(onClose: () => void) {
     const dialog = ref.current;
     if (!dialog) return;
     if (!dialog.open) dialog.showModal();
+    // React's autoFocus runs before the dialog is open, so fields opt in with
+    // data-autofocus instead. Without one, the browser focuses the first control.
+    dialog.querySelector<HTMLElement>("[data-autofocus]")?.focus();
     // Runs on unmount and when Next.js hides this route (Activity), so a
     // hidden page can never leave an open modal making the app inert.
     return () => {

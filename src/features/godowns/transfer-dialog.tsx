@@ -53,7 +53,7 @@ export function TransferDialog({ itemId: initialItem, fromGodownId, onClose }: T
     >
       <form id="transfer-form" onSubmit={submit} className="space-y-4">
         <Field label="Item">
-          <Select value={itemId} onChange={(e) => setItemId(e.target.value)} autoFocus={!initialItem}>
+          <Select value={itemId} onChange={(e) => setItemId(e.target.value)} data-autofocus={!initialItem || undefined}>
             <option value="">Select an item…</option>
             {state.items.map((i) => (
               <option key={i.id} value={i.id}>{i.name} · {i.sku}</option>
@@ -96,7 +96,7 @@ export function TransferDialog({ itemId: initialItem, fromGodownId, onClose }: T
               value={qty}
               onChange={(e) => setQty(e.target.value)}
               className="tabular-nums"
-              autoFocus={!!initialItem}
+              data-autofocus={initialItem ? true : undefined}
               required
             />
             <Button onClick={() => setQty(String(available))} disabled={!available}>

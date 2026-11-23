@@ -63,7 +63,7 @@ export function AdjustStockDialog({ itemId: initialItem, godownId: initialGodown
     >
       <form id="adjust-form" onSubmit={submit} className="space-y-4">
         <Field label="Item">
-          <Select value={itemId} onChange={(e) => setItemId(e.target.value)} autoFocus={!initialItem}>
+          <Select value={itemId} onChange={(e) => setItemId(e.target.value)} data-autofocus={!initialItem || undefined}>
             <option value="">Select an item…</option>
             {state.items.map((i) => (
               <option key={i.id} value={i.id}>{i.name} · {i.sku}</option>
@@ -92,7 +92,7 @@ export function AdjustStockDialog({ itemId: initialItem, godownId: initialGodown
               value={counted}
               onChange={(e) => setCounted(e.target.value)}
               className="h-[46px] text-lg font-semibold tabular-nums"
-              autoFocus={!!initialItem}
+              data-autofocus={initialItem ? true : undefined}
               required
             />
           </Field>

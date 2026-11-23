@@ -80,7 +80,7 @@ export function ItemDialog({ itemId, onClose }: { itemId?: string; onClose: () =
       <form id="item-form" onSubmit={submit} className="space-y-5">
         <div className="grid gap-4 sm:grid-cols-2">
           <Field label="Item name" className="sm:col-span-2">
-            <Input value={form.name} onChange={set("name")} placeholder="e.g. Wireless Keyboard K380" required autoFocus />
+            <Input value={form.name} onChange={set("name")} placeholder="e.g. Wireless Keyboard K380" required data-autofocus />
           </Field>
           <Field label="SKU" hint="Unique code printed on labels.">
             <Input value={form.sku} onChange={set("sku")} placeholder="PER-KBD-380" className="font-mono uppercase" required />

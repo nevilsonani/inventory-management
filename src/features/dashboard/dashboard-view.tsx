@@ -81,7 +81,7 @@ export function DashboardView() {
   return (
     <>
       <PageHeader
-        title={`${greeting(now.getHours())}`}
+        title={greeting(now.getHours())}
         description={`${new Intl.DateTimeFormat("en-IN", { weekday: "long", day: "numeric", month: "long" }).format(now)} · Here's how stock is moving across your ${state.godowns.length} godowns.`}
         actions={
           <>
@@ -147,7 +147,7 @@ export function DashboardView() {
               series={series}
               formatValue={formatCurrency}
               formatAxis={formatCompactCurrency}
-              height={260}
+              height={300}
             />
           </div>
         </Card>

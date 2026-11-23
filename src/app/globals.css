@@ -44,6 +44,8 @@
   html {
     color-scheme: light;
     -webkit-tap-highlight-color: transparent;
+    /* Reserve the scrollbar so opening a modal doesn't shift the layout. */
+    scrollbar-gutter: stable;
   }
 
   body {

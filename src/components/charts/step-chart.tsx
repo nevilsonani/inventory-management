@@ -106,7 +106,7 @@ export function StepChart({ points, threshold, thresholdLabel, height = 220, tit
           </svg>
           {threshold !== undefined && thresholdLabel && (
             <span
-              className="absolute right-0 -translate-y-full pb-0.5 text-[11px] font-medium text-amber-700"
+              className="absolute left-1.5 -translate-y-full pb-0.5 text-[11px] font-medium text-amber-700"
               style={{ top: `${y(threshold)}%` }}
             >
               {thresholdLabel}

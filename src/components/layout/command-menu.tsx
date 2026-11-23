@@ -157,7 +157,7 @@ export function CommandMenu({ onClose }: { onClose: () => void }) {
       <div className="flex items-center gap-3 border-b border-zinc-950/[0.06] px-4">
         <Search className="size-4 shrink-0 text-zinc-400" aria-hidden />
         <input
-          autoFocus
+          data-autofocus
           value={query}
           onChange={(event) => {
             setQuery(event.target.value);
