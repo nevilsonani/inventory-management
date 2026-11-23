@@ -4,39 +4,12 @@ import { X } from "lucide-react";
 import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-interface DialogProps {
-  title: ReactNode;
-  description?: ReactNode;
-  onClose: () => void;
-  children: ReactNode;
-  footer?: ReactNode;
-  /** "modal" is centred; "sheet" slides in from the right edge. */
-  variant?: "modal" | "sheet";
-  size?: "md" | "lg" | "xl";
-  /** Extra content in the header, e.g. a status badge. */
-  meta?: ReactNode;
-}
-
-const widths = {
-  modal: { md: "max-w-lg", lg: "max-w-2xl", xl: "max-w-4xl" },
-  sheet: { md: "max-w-md", lg: "max-w-xl", xl: "max-w-2xl" },
-};
-
 /**
- * Native <dialog> shown with showModal(): focus trapping, Escape, inert
- * background and top-layer stacking come from the browser. The dialog is open
- * while mounted. Render it conditionally to open and close it.
+ * Behaviour for a native <dialog> shown with showModal(): focus trapping,
+ * Escape, an inert background and top-layer stacking come from the browser.
+ * The dialog is open while mounted; render it conditionally to open/close.
  */
-export function Dialog({
-  title,
-  description,
-  onClose,
-  children,
-  footer,
-  variant = "modal",
-  size = "md",
-  meta,
-}: DialogProps) {
+export function useModal(onClose: () => void) {
   const ref = useRef<HTMLDialogElement>(null);
   const closingFromCode = useRef(false);
   const pressedBackdrop = useRef(false);
@@ -53,30 +26,65 @@ export function Dialog({
     };
   }, []);
 
+  return {
+    ref,
+    onCancel(event: React.SyntheticEvent) {
+      event.preventDefault();
+      onClose();
+    },
+    onClose() {
+      // Browsers can force-close on repeated Escape; keep React in sync.
+      if (closingFromCode.current) closingFromCode.current = false;
+      else onClose();
+    },
+    // Close on backdrop click, but not when a text-selection drag ends there.
+    onPointerDown(event: React.PointerEvent) {
+      pressedBackdrop.current = event.target === event.currentTarget;
+    },
+    onClick(event: React.MouseEvent) {
+      if (pressedBackdrop.current && event.target === event.currentTarget) onClose();
+    },
+  };
+}
+
+interface DialogProps {
+  title: ReactNode;
+  description?: ReactNode;
+  onClose: () => void;
+  children: ReactNode;
+  footer?: ReactNode;
+  /** "modal" is centred; "sheet" slides in from the right edge. */
+  variant?: "modal" | "sheet";
+  size?: "md" | "lg" | "xl";
+  /** Extra content beside the title, e.g. a status badge. */
+  meta?: ReactNode;
+}
+
+const widths = {
+  modal: { md: "max-w-lg", lg: "max-w-2xl", xl: "max-w-4xl" },
+  sheet: { md: "max-w-md", lg: "max-w-xl", xl: "max-w-2xl" },
+};
+
+export function Dialog({
+  title,
+  description,
+  onClose,
+  children,
+  footer,
+  variant = "modal",
+  size = "md",
+  meta,
+}: DialogProps) {
+  const modal = useModal(onClose);
+
   return (
     <dialog
-      ref={ref}
+      {...modal}
       aria-label={typeof title === "string" ? title : undefined}
-      onCancel={(event) => {
-        event.preventDefault();
-        onClose();
-      }}
-      onClose={() => {
-        // Browsers can force-close on repeated Escape; keep React in sync.
-        if (closingFromCode.current) closingFromCode.current = false;
-        else onClose();
-      }}
-      // Close on backdrop click, but not when a text selection drag ends there.
-      onPointerDown={(event) => {
-        pressedBackdrop.current = event.target === event.currentTarget;
-      }}
-      onClick={(event) => {
-        if (pressedBackdrop.current && event.target === event.currentTarget) onClose();
-      }}
       className={cn(
         "hidden w-full flex-col overflow-hidden bg-white p-0 text-zinc-900 shadow-overlay outline-none open:flex",
         variant === "modal"
-          ? "dialog-modal max-h-[min(90dvh,860px)] w-[calc(100%-2rem)] rounded-2xl"
+          ? "dialog-modal max-h-[min(90dvh,880px)] w-[calc(100%-2rem)] rounded-2xl"
           : "dialog-sheet sm:rounded-l-2xl",
         widths[variant][size],
       )}
@@ -87,7 +95,7 @@ export function Dialog({
             <h2 className="text-base font-semibold tracking-tight">{title}</h2>
             {meta}
           </div>
-          {description && <p className="mt-1 text-[13px] text-zinc-500">{description}</p>}
+          {description && <div className="mt-1 text-[13px] text-zinc-500">{description}</div>}
         </div>
         <button
           type="button"
@@ -105,5 +113,18 @@ export function Dialog({
         </footer>
       )}
     </dialog>
+  );
+}
+
+/** Inline error callout for forms inside dialogs (toasts sit under modals). */
+export function FormError({ message }: { message: string | null }) {
+  if (!message) return null;
+  return (
+    <p
+      role="alert"
+      className="animate-fade-in rounded-lg bg-rose-50 px-3 py-2.5 text-[13px] text-rose-700 ring-1 ring-rose-600/15 ring-inset"
+    >
+      {message}
+    </p>
   );
 }
