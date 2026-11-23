@@ -52,7 +52,7 @@ export function StockReport({ state }: { state: InventoryState }) {
         />
       </div>
 
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <CardHeader title="Value by category" description="Share of stock value at cost" />
           <div className="px-5 pb-5">

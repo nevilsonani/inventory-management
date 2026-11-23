@@ -40,7 +40,7 @@ export function GodownsView() {
         }
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {state.godowns.map((godown) => {
           const units = sum(state.items, (item) => qtyAt(item, godown.id));
           const value = sum(state.items, (item) => qtyAt(item, godown.id) * item.costPrice);

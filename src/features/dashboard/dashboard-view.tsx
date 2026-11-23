@@ -132,7 +132,7 @@ export function DashboardView() {
         />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader
             title="Sales vs purchases"
@@ -155,7 +155,7 @@ export function DashboardView() {
         <LowStockCard state={state} items={alerts} />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <ActivityCard state={state} />
         <div className="space-y-4">
           <AttentionCard state={state} />

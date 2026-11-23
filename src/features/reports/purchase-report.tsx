@@ -81,7 +81,7 @@ export function PurchaseReport({ state, from, to }: { state: InventoryState; fro
         />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader title="Purchases over time" description={`${span <= 92 ? "Weekly" : "Monthly"} value received, including GST`} />
           <div className="px-5 pt-6 pb-5">
@@ -112,7 +112,7 @@ export function PurchaseReport({ state, from, to }: { state: InventoryState; fro
         </Card>
       </div>
 
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <CardHeader title="By category" description="Value received excl. GST" />
           <div className="px-5 pb-5">

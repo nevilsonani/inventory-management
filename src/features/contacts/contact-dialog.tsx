@@ -61,7 +61,7 @@ export function ContactDialog({ kind, onClose }: { kind: "customer" | "supplier"
         </>
       }
     >
-      <form id="contact-form" onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
+      <form id="contact-form" onSubmit={submit} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <Field label="Business name" className="sm:col-span-2">
           <Input value={form.name} onChange={set("name")} required data-autofocus />
         </Field>

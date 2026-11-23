@@ -136,7 +136,7 @@ export function ItemView() {
         />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader title="Stock level" description="Total units on hand, last 90 days" />
           <div className="px-5 pt-4 pb-5">

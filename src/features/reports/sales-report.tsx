@@ -72,7 +72,7 @@ export function SalesReport({ state, from, to }: { state: InventoryState; from: 
         <Stat label="GST collected" value={formatCompactCurrency(gst)} footer="Output tax at 18%" />
       </div>
 
-      <div className="mt-4 grid gap-4 lg:grid-cols-3">
+      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2">
           <CardHeader title="Revenue over time" description={`${span <= 92 ? "Weekly" : "Monthly"}, including GST`} />
           <div className="px-5 pt-6 pb-5">
@@ -102,7 +102,7 @@ export function SalesReport({ state, from, to }: { state: InventoryState; from: 
         </Card>
       </div>
 
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <CardHeader title="Best-selling items" description="Revenue excl. GST, with units sold" />
           <div className="px-5 pb-5">
