@@ -2,11 +2,17 @@
   "name": "inventory-management",
   "version": "0.1.0",
   "private": true,
+  "description": "Inventory management for distributors: sales, purchases, stock across godowns and reports. Next.js + Tailwind.",
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run build"
   },
   "dependencies": {
     "clsx": "^2.1.1",

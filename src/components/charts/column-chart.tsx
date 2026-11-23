@@ -39,6 +39,8 @@ export function ColumnChart({ data, series, formatValue, formatAxis, height = 24
   const max = Math.max(0, ...data.flatMap((d) => series.map((s) => d.values[s.key] ?? 0)));
   const ticks = niceTicks(max);
   const top = ticks[ticks.length - 1];
+  // Label at most ~7 periods so axis text never crowds; tooltips name every bar.
+  const labelEvery = Math.ceil(data.length / 7);
 
   return (
     <div className="relative">
@@ -70,7 +72,7 @@ export function ColumnChart({ data, series, formatValue, formatAxis, height = 24
             {data.map((group, index) => (
               <div
                 key={group.label}
-                className="relative flex flex-1 items-end justify-center gap-[2px] px-1.5"
+                className="relative flex min-w-0 flex-1 items-end justify-center gap-[2px] px-1.5"
                 onPointerEnter={() => setHovered(index)}
                 onPointerLeave={() => setHovered(null)}
               >
@@ -110,9 +112,9 @@ export function ColumnChart({ data, series, formatValue, formatAxis, height = 24
 
       {/* X axis */}
       <div className="ml-14 flex pt-2" aria-hidden>
-        {data.map((group) => (
-          <span key={group.label} className="flex-1 text-center text-xs text-zinc-500">
-            {group.label}
+        {data.map((group, index) => (
+          <span key={group.label} className="min-w-0 flex-1 text-center text-xs whitespace-nowrap text-zinc-500">
+            {index % labelEvery === 0 ? group.label : ""}
           </span>
         ))}
       </div>
