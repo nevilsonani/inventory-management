@@ -193,7 +193,7 @@ export function createSeedState(now = new Date()): InventoryState {
   let state: InventoryState = {
     version: STATE_VERSION,
     godowns,
-    items: itemSeeds.map(({ target: _target, ...item }) => ({
+    items: itemSeeds.map(({ target, ...item }) => ({
       ...item,
       stock: Object.fromEntries(godowns.map((g) => [g.id, 0])),
     })),

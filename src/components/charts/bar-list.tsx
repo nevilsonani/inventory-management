@@ -15,10 +15,12 @@ interface BarListProps {
   formatValue: (value: number) => string;
   /** Visually hidden description of what is ranked. */
   title: string;
+  /** Series colour. Purchases use series 2 everywhere, sales series 1. */
+  color?: string;
 }
 
 /** Ranked horizontal bars. One series, so one colour and no legend. */
-export function BarList({ items, formatValue, title }: BarListProps) {
+export function BarList({ items, formatValue, title, color = "var(--color-series-1)" }: BarListProps) {
   const max = Math.max(1, ...items.map((item) => item.value));
   return (
     <ul className="space-y-3.5" aria-label={title}>
@@ -41,8 +43,8 @@ export function BarList({ items, formatValue, title }: BarListProps) {
             </div>
             <div className="mt-1.5 h-2 rounded-r-[4px]" aria-hidden>
               <div
-                className="h-full rounded-r-[4px] bg-series-1 transition-[width] duration-500"
-                style={{ width: `${Math.max(1, (item.value / max) * 100)}%` }}
+                className="h-full rounded-r-[4px] transition-[width] duration-500"
+                style={{ width: `${Math.max(1, (item.value / max) * 100)}%`, background: color }}
               />
             </div>
           </li>

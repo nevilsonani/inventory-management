@@ -111,19 +111,28 @@ export function inRange(iso: string | undefined, from: Date, to: Date) {
   return time >= from.getTime() && time < to.getTime();
 }
 
+/** Sales invoiced (dispatched) in [from, to). */
+export const invoicedBetween = (state: InventoryState, from: Date, to: Date) =>
+  state.salesOrders.filter((so) => isInvoiced(so) && inRange(invoiceDate(so), from, to));
+
+/** Purchase orders received in [from, to). */
+export const receivedBetween = (state: InventoryState, from: Date, to: Date) =>
+  state.purchaseOrders.filter((po) => po.status === "received" && inRange(po.receivedAt, from, to));
+
 export const revenueBetween = (state: InventoryState, from: Date, to: Date) =>
-  sum(
-    state.salesOrders.filter((so) => isInvoiced(so) && inRange(invoiceDate(so), from, to)),
-    orderTotal,
-  );
+  sum(invoicedBetween(state, from, to), orderTotal);
 
 export const purchasesBetween = (state: InventoryState, from: Date, to: Date) =>
-  sum(
-    state.purchaseOrders.filter(
-      (po) => po.status === "received" && inRange(po.receivedAt, from, to),
-    ),
-    orderTotal,
-  );
+  sum(receivedBetween(state, from, to), orderTotal);
+
+/** Totals per key, largest first. E.g. revenue per customer. */
+export function groupTotals<T>(rows: T[], key: (row: T) => string, value: (row: T) => number) {
+  const totals = new Map<string, number>();
+  for (const row of rows) totals.set(key(row), (totals.get(key(row)) ?? 0) + value(row));
+  return [...totals]
+    .map(([group, total]) => ({ key: group, total }))
+    .sort((a, b) => b.total - a.total);
+}
 
 export interface MonthPoint {
   key: string;

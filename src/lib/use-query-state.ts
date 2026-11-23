@@ -8,7 +8,11 @@ import { useCallback } from "react";
  * can be linked to from other pages, and reset correctly when Next.js
  * restores a preserved page.
  */
-export function useQueryState<T extends string>(key: string, fallback: T, allowed?: readonly T[]) {
+export function useQueryState<T extends string = string>(
+  key: string,
+  fallback: NoInfer<T>,
+  allowed?: readonly T[],
+) {
   const params = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
